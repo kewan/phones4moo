@@ -1,0 +1,3 @@
+#venue:
+#    path:     /hello/{name}
+#    defaults: { _controller: Phones4MooStoreBundle:Default:index }

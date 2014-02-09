@@ -1,0 +1,5 @@
+phones4_moo_store:
+    resource: "@Phones4MooStoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
