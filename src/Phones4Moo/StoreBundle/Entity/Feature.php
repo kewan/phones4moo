@@ -61,4 +61,8 @@ class Feature
     {
         return $this->title;
     }
+    
+    public function __toString() {
+        return $this->getTitle();
+    }
 }
