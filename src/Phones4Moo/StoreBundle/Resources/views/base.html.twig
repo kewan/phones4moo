@@ -7,8 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% stylesheets filter='sass' 
-        "@Phones4MooStoreBundle/Resources/assets/stylesheets/application.css.scss"
+    {% stylesheets filter="sass"
+        '%kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/stylesheets/variables.scss'
+                "@Phones4MooStoreBundle/Resources/assets/stylesheets/application.css.scss"
+        '%kernel.root_dir%/../vendor/twbs/bootstrap-sass/vendor/assets/stylesheets/bootstrap.scss'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}

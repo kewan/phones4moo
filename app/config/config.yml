@@ -37,8 +37,8 @@ assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [ 'Phones4MooStoreBundle' ]
-    sass: /Users/kewan/.rbenv/versions/2.0.0-p247/bin/sass
-    ruby: /Users/kewan/.rbenv/versions/2.0.0-p247/bin/ruby
+    sass: "%sass%"
+    ruby: "%ruby%"
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
