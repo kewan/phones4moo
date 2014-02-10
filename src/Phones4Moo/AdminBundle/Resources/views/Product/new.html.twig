@@ -3,18 +3,20 @@
 {% block body -%}
     <div class="container">
         <div class="page-header">
-            <h1>Checkout</h1>
+            <h1>New Feature</h1>
         </div>
 
         {{ form_start(form) }}
         {{ form_errors(form) }}
 
 
-        {{ form_row(form.customer.email) }}
-        {{ form_row(form.customer.firstname) }}
-        {{ form_row(form.customer.lastname) }}
+        {{ form_row(form.name) }}
         
-        {{ form_row(form.product) }}
+        {{ form_row(form.currency) }}
+        
+        {{ form_row(form.price) }}
+        
+        {{ form_row(form.features) }}
 
         <div class="form-group">
             {{ form_widget(form.submit, {'attr': {'class' : 'btn btn-primary' }}) }}
@@ -22,5 +24,12 @@
 
         {{ form_end(form) }}
 
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('feature') }}">
+                    Back to the list
+                </a>
+            </li>
+        </ul>
     </div>
 {% endblock %}

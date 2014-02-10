@@ -3,6 +3,7 @@
 namespace Phones4Moo\StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Customer
@@ -42,6 +43,16 @@ class Customer
      */
     private $lastname;
 
+
+    /**
+    * @ORM\OneToMany(targetEntity="Transaction", mappedBy="customer")
+    **/
+    private $transactions;
+
+
+    public function __construct() {
+        $this->transactions = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -120,5 +131,38 @@ class Customer
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Add transactions
+     *
+     * @param \Phones4Moo\StoreBundle\Entity\Transaction $transactions
+     * @return Customer
+     */
+    public function addTransaction(\Phones4Moo\StoreBundle\Entity\Transaction $transactions)
+    {
+        $this->transactions[] = $transactions;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param \Phones4Moo\StoreBundle\Entity\Transaction $transactions
+     */
+    public function removeTransaction(\Phones4Moo\StoreBundle\Entity\Transaction $transactions)
+    {
+        $this->transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 }

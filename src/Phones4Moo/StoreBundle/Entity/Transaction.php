@@ -22,13 +22,13 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Customer")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="transactions", cascade={"persist"})
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      **/
     private $customer;
 
     /**
-     * @ORM\OneToOne(targetEntity="Product")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="products")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      **/
     private $product;    
@@ -42,9 +42,6 @@ class Transaction
     {
         return $this->id;
     }
-   
-    
-    
 
     /**
      * Set customer

@@ -1,0 +1,6 @@
+services:
+    phones4_moo_store.type.hidden_entity:
+        class: Phones4Moo\StoreBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: hidden_entity }

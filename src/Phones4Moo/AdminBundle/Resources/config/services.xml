@@ -6,11 +6,11 @@
 
     <!--
     <parameters>
-        <parameter key="phones4_moo_store.example.class">Phones4Moo\StoreBundle\Example</parameter>
+        <parameter key="phones4_moo_admin.example.class">Phones4Moo\AdminBundle\Example</parameter>
     </parameters>
 
     <services>
-        <service id="phones4_moo_store.example" class="%phones4_moo_store.example.class%">
+        <service id="phones4_moo_admin.example" class="%phones4_moo_admin.example.class%">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

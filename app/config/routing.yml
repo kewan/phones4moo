@@ -1,3 +1,8 @@
+phones4_moo_admin:
+    resource: "@Phones4MooAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
 phones4_moo_store:
     resource: "@Phones4MooStoreBundle/Controller/"
     type:     annotation

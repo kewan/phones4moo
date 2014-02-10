@@ -1,0 +1,53 @@
+{% extends 'Phones4MooStoreBundle::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        {{ include('Phones4MooAdminBundle::adminMenu.html.twig') }}
+
+        <div class="page-header">
+            <h1>Products</h1>
+        </div>
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Currency</th>
+                    <th>Transactions</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('product_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.price }}</td>
+                    <td>{{ entity.currency }}</td>
+                    <td>{{ entity.getTransactions|length }}</td>
+                    <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('product_show', { 'id': entity.id }) }}" class="btn btn-sm btn-default">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('product_edit', { 'id': entity.id }) }}" class="btn btn-sm btn-default">edit</a>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="list-inline">
+            <li>
+                <a href="{{ path('product_new') }}" class="btn btn-primary">
+                    New
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

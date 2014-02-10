@@ -1,0 +1,35 @@
+{% extends 'Phones4MooStoreBundle::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        <div class="page-header">
+            <h1>Edit Feature</h1>
+        </div>
+
+
+        {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+
+        {{ form_row(edit_form.title) }}
+
+        <div class="form-group">
+            {{ form_widget(edit_form.submit, {'attr': {'class' : 'btn btn-primary' }}) }}
+        </div>
+
+        {{ form_end(edit_form) }}
+
+        <ul class="nav nav-pills">
+            <li>
+                <a href="{{ path('feature') }}">
+                    Back to the list
+                </a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                {{ form_widget(delete_form.submit, {'attr': {'class' : 'btn btn-danger' }}) }}
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

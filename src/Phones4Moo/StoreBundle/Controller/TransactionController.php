@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Phones4Moo\StoreBundle\Entity\Transaction;
+use Phones4Moo\StoreBundle\Entity\Product;
 use Phones4Moo\StoreBundle\Form\TransactionType;
 
 /**
@@ -18,23 +20,6 @@ use Phones4Moo\StoreBundle\Form\TransactionType;
 class TransactionController extends Controller
 {
 
-    /**
-     * Lists all Transaction entities.
-     *
-     * @Route("/", name="transaction")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('Phones4MooStoreBundle:Transaction')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
     /**
      * Creates a new Transaction entity.
      *
@@ -53,7 +38,11 @@ class TransactionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('transaction_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add(
+                'notice', sprintf('Thank you for your purchase %s', $entity->getCustomer()->getFirstname())
+            );
+
+            return $this->redirect($this->generateUrl('product'));
         }
 
         return array(
@@ -76,7 +65,7 @@ class TransactionController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Purchase'));
 
         return $form;
     }
@@ -84,13 +73,15 @@ class TransactionController extends Controller
     /**
      * Displays a form to create a new Transaction entity.
      *
-     * @Route("/new", name="transaction_new")
+     * @Route("/new/{product}", name="transaction_new")
      * @Method("GET")
      * @Template()
+     * @ParamConverter("product", class="Phones4MooStoreBundle:Product")
      */
-    public function newAction()
+    public function newAction(Product $product)
     {
         $entity = new Transaction();
+        $entity->setProduct($product);
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -99,149 +90,5 @@ class TransactionController extends Controller
         );
     }
 
-    /**
-     * Finds and displays a Transaction entity.
-     *
-     * @Route("/{id}", name="transaction_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('Phones4MooStoreBundle:Transaction')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Transaction entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing Transaction entity.
-     *
-     * @Route("/{id}/edit", name="transaction_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('Phones4MooStoreBundle:Transaction')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Transaction entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Transaction entity.
-    *
-    * @param Transaction $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Transaction $entity)
-    {
-        $form = $this->createForm(new TransactionType(), $entity, array(
-            'action' => $this->generateUrl('transaction_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Transaction entity.
-     *
-     * @Route("/{id}", name="transaction_update")
-     * @Method("PUT")
-     * @Template("Phones4MooStoreBundle:Transaction:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('Phones4MooStoreBundle:Transaction')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Transaction entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('transaction_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-    /**
-     * Deletes a Transaction entity.
-     *
-     * @Route("/{id}", name="transaction_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('Phones4MooStoreBundle:Transaction')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Transaction entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('transaction'));
-    }
-
-    /**
-     * Creates a form to delete a Transaction entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('transaction_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
-    }
 }

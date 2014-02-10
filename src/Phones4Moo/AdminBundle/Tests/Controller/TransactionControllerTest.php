@@ -1,10 +1,10 @@
 <?php
 
-namespace Phones4Moo\StoreBundle\Tests\Controller;
+namespace Phones4Moo\AdminBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class FeatureControllerTest extends WebTestCase
+class TransactionControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class FeatureControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/feature/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /feature/");
+        $crawler = $client->request('GET', '/transaction/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /transaction/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'phones4moo_storebundle_featuretype[field_name]'  => 'Test',
+            'phones4moo_storebundle_transactiontype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class FeatureControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'phones4moo_storebundle_featuretype[field_name]'  => 'Foo',
+            'phones4moo_storebundle_transactiontype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

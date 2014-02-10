@@ -53,6 +53,11 @@ class Product
      **/
     private $features;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Transaction", mappedBy="product")
+    **/
+    private $transactions;
+
     public function __construct() {
         $this->features = new ArrayCollection();
     }
@@ -167,5 +172,42 @@ class Product
     public function getFeatures()
     {
         return $this->features;
+    }
+    
+    public function __toString() {
+        return $this->name;
+    }
+
+    /**
+     * Add transactions
+     *
+     * @param \Phones4Moo\StoreBundle\Entity\Transaction $transactions
+     * @return Product
+     */
+    public function addTransaction(\Phones4Moo\StoreBundle\Entity\Transaction $transactions)
+    {
+        $this->transactions[] = $transactions;
+
+        return $this;
+    }
+
+    /**
+     * Remove transactions
+     *
+     * @param \Phones4Moo\StoreBundle\Entity\Transaction $transactions
+     */
+    public function removeTransaction(\Phones4Moo\StoreBundle\Entity\Transaction $transactions)
+    {
+        $this->transactions->removeElement($transactions);
+    }
+
+    /**
+     * Get transactions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTransactions()
+    {
+        return $this->transactions;
     }
 }

@@ -1,0 +1,44 @@
+{% extends 'Phones4MooStoreBundle::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        {{ include('Phones4MooAdminBundle::adminMenu.html.twig') }}
+
+        <div class="page-header">
+            <h1>Features</h1>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.title }}</td>
+                    <td>
+                    <ul class="list-unstyled list-inline">
+                        <li>
+                            <a href="{{ path('feature_edit', { 'id': entity.id }) }}" class="btn btn-sm btn-default">edit</a>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="list-unstyled">
+            <li>
+                <a href="{{ path('feature_new') }}" class="btn btn-primary">
+                    New
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

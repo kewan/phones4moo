@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType
+class CustomerType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,9 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('price')
-            ->add('currency')
-            ->add('features')
+            ->add('email')
+            ->add('firstname')
+            ->add('lastname')
         ;
     }
     
@@ -28,7 +27,7 @@ class ProductType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Phones4Moo\StoreBundle\Entity\Product'
+            'data_class' => 'Phones4Moo\StoreBundle\Entity\Customer'
         ));
     }
 
@@ -37,6 +36,6 @@ class ProductType extends AbstractType
      */
     public function getName()
     {
-        return 'phones4moo_storebundle_product';
+        return 'phones4moo_storebundle_customer';
     }
 }
